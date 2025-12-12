@@ -1,0 +1,3 @@
+Sample data and notes:
+- Replace YOUR NAME and YOUR ID in README and headers.
+- This scaffold meets the project's functional requirements (AsyncStorage, Navigation, simple API usage).

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "title": "Salary",
+    "amount": 2500,
+    "type": "income",
+    "category": "Salary",
+    "date": "2025-01-25T09:00:00Z"
+  },
+  {
+    "id": "2",
+    "title": "Groceries",
+    "amount": 120.5,
+    "type": "expense",
+    "category": "Food",
+    "date": "2025-02-03T18:30:00Z"
+  },
+  {
+    "id": "3",
+    "title": "Coffee",
+    "amount": 4.5,
+    "type": "expense",
+    "category": "Food",
+    "date": "2025-02-05T08:15:00Z"
+  }
+]
