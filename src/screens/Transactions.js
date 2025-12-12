@@ -1,8 +1,7 @@
 /**
  * Course: MAD201 - Project 2
- * Student: YOUR NAME HERE - YOUR ID HERE
+ * Student: Ishmeet Singh
  * Description: Smart Budget Tracker Lite - React Native (Expo)
- * This file is part of the project submission for MAD201.
  */
 
 import React, { useEffect, useState } from 'react';
@@ -18,40 +17,72 @@ export default function Transactions({ navigation }) {
     setTransactions(raw ? JSON.parse(raw) : []);
   };
 
-  useEffect(() => { const unsub = navigation.addListener('focus', load); load(); return unsub; }, [navigation]);
+  useEffect(() => {
+    const unsub = navigation.addListener('focus', load);
+    load();
+    return unsub;
+  }, [navigation]);
 
   const del = (id) => {
-    Alert.alert('Delete','Delete this transaction?',[
-      {text:'Cancel'},
-      {text:'Delete', onPress: async () => {
-        const next = transactions.filter(t => t.id !== id);
-        setTransactions(next);
-        await AsyncStorage.setItem('transactions', JSON.stringify(next));
-      }}
+    Alert.alert("Delete", "Delete this transaction?", [
+      { text: "Cancel" },
+      {
+        text: "Delete",
+        onPress: async () => {
+          const next = transactions.filter(t => t.id !== id);
+          setTransactions(next);
+          await AsyncStorage.setItem('transactions', JSON.stringify(next));
+        }
+      }
     ]);
   };
 
+  // ⭐ NEW: CLEAR ALL BUTTON
+  const clearAll = () => {
+    Alert.alert(
+      "Clear All Transactions",
+      "This will remove ALL your transactions. Continue?",
+      [
+        { text: "Cancel" },
+        {
+          text: "Clear All",
+          style: "destructive",
+          onPress: async () => {
+            await AsyncStorage.setItem("transactions", JSON.stringify([]));
+            setTransactions([]);
+          }
+        }
+      ]
+    );
+  };
+
   return (
-    <SafeAreaView style={{flex:1}}>
-      <View style={{padding:16}}>
-        <Button title="Add" onPress={() => navigation.navigate('Add')} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ padding: 16, gap: 10 }}>
+        <Button title="Add New Transaction" onPress={() => navigation.navigate('Add')} />
+
+        {/* ⭐ NEW: CLEAR ALL BUTTON */}
+        <Button title="Clear All Transactions" color="#b91c1c" onPress={clearAll} />
       </View>
+
       <FlatList
         data={transactions}
         keyExtractor={i => i.id}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <View style={styles.itemRow}>
             <TransactionItem item={item} />
-            <TouchableOpacity style={styles.del} onPress={() => del(item.id)}><Text style={{color:'#fff'}}>Delete</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.del} onPress={() => del(item.id)}>
+              <Text style={{ color: "#fff" }}>Delete</Text>
+            </TouchableOpacity>
           </View>
         )}
-        ListEmptyComponent={() => <Text style={{padding:16}}>No transactions yet.</Text>}
+        ListEmptyComponent={() => <Text style={{ padding: 16 }}>No transactions yet.</Text>}
       />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  itemRow: { flexDirection:'row', justifyContent:'space-between', alignItems:'center', paddingHorizontal:12 },
-  del: { backgroundColor:'#dc2626', padding:8, borderRadius:6 }
+  itemRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 12 },
+  del: { backgroundColor: '#dc2626', padding: 8, borderRadius: 6 }
 });
