@@ -1,6 +1,6 @@
 # MAD201 - SmartBudgetLite (Full Project)
 
-Generated: 2025-12-12T04:45:16.583004Z
+
 
 This repo contains a full React Native (Expo) project structure with the following folders:
 - .vscode (settings + extensions)
