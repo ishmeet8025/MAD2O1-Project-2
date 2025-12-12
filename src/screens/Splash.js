@@ -1,18 +1,24 @@
-/**
- * Course: MAD201 - Project 2
- * Student: YOUR NAME HERE - YOUR ID HERE
- * Description: Smart Budget Tracker Lite - React Native (Expo)
- * This file is part of the project submission for MAD201.
- */
-
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import sampleData from '../../assets/sample-data.json';
 
 export default function Splash({ navigation }) {
   useEffect(() => {
-    const t = setTimeout(() => navigation.replace('Home'), 1800);
-    return () => clearTimeout(t);
-  }, [navigation]);
+    async function seed() {
+      try {
+        const raw = await AsyncStorage.getItem('transactions');
+        if (!raw) {
+          await AsyncStorage.setItem('transactions', JSON.stringify(sampleData));
+        }
+      } catch (e) {
+        console.warn('Seeding failed', e);
+      } finally {
+        setTimeout(() => navigation.replace('Home'), 1200);
+      }
+    }
+    seed();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -23,7 +29,7 @@ export default function Splash({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex:1, alignItems:'center', justifyContent:'center', backgroundColor:'#fff' },
-  logo: { width:120, height:120, marginBottom:20 },
-  title: { fontSize:20, fontWeight:'700' }
+  container: { flex:1, justifyContent:'center', alignItems:'center' },
+  logo: { width:110, height:110, marginBottom:15 },
+  title: { fontSize:18, fontWeight:'700' }
 });
