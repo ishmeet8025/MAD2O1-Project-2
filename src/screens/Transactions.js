@@ -57,29 +57,32 @@ export default function Transactions({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ padding: 16, gap: 10 }}>
-        <Button title="Add New Transaction" onPress={() => navigation.navigate('Add')} />
+  <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ padding: 16, gap: 10 }}>
+      <Button title="Add New Transaction" onPress={() => navigation.navigate('Add')} />
 
-        {/* ⭐ NEW: CLEAR ALL BUTTON */}
-        <Button title="Clear All Transactions" color="#b91c1c" onPress={clearAll} />
-      </View>
-
-      <FlatList
-        data={transactions}
-        keyExtractor={i => i.id}
-        renderItem={({ item }) => (
-          <View style={styles.itemRow}>
-            <TransactionItem item={item} />
-            <TouchableOpacity style={styles.del} onPress={() => del(item.id)}>
-              <Text style={{ color: "#fff" }}>Delete</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        ListEmptyComponent={() => <Text style={{ padding: 16 }}>No transactions yet.</Text>}
+      <Button
+        title="Clear All Transactions"
+        color="#b91c1c"
+        onPress={clearAll}
       />
-    </SafeAreaView>
-  );
+    </View>
+
+    <FlatList
+      data={transactions}
+      keyExtractor={i => i.id}
+      renderItem={({ item }) => (
+        <View style={styles.itemRow}>
+          <TransactionItem item={item} />
+          <TouchableOpacity style={styles.del} onPress={() => del(item.id)}>
+            <Text style={{ color: "#fff" }}>Delete</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      ListEmptyComponent={() => <Text style={{ padding: 16 }}>No transactions yet.</Text>}
+    />
+  </SafeAreaView>
+);
 }
 
 const styles = StyleSheet.create({
