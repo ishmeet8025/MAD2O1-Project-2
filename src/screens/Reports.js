@@ -9,24 +9,22 @@ export default function Reports() {
     async function load() {
       const raw = await AsyncStorage.getItem('transactions');
       const tx = raw ? JSON.parse(raw) : [];
-
-      const byCategory = {};
+      const map = {};
       tx.forEach(t => {
-        byCategory[t.category] = (byCategory[t.category] || 0) + Number(t.amount);
+        map[t.category] = (map[t.category] || 0) + Number(t.amount);
       });
-
-      setSummary({ byCategory });
+      setSummary({ byCategory: map });
     }
     load();
   }, []);
 
-  const total = Object.values(summary.byCategory).reduce((s, a) => s + a, 0);
+  const total = Object.values(summary.byCategory).reduce((s,a)=>s+a,0);
 
   return (
     <ScrollView style={{padding:16}}>
       <Text style={styles.heading}>Reports</Text>
       {Object.entries(summary.byCategory).map(([cat, amt]) => {
-        const pct = total > 0 ? (amt / total) * 100 : 0;
+        const pct = total ? (amt / total) * 100 : 0;
         return (
           <View key={cat} style={styles.row}>
             <Text>{cat}</Text>
