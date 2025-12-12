@@ -1,6 +1,6 @@
 /**
  * Course: MAD201 - Project 2
- * Student: YOUR NAME HERE - YOUR ID HERE
+ * Student: Ishmeet Singh
  * Description: Smart Budget Tracker Lite - React Native (Expo)
  * This file is part of the project submission for MAD201.
  */
@@ -17,6 +17,7 @@ export default function Home({ navigation }) {
   const income = transactions.filter(t => t.type === 'income').reduce((s,a)=>s+Number(a.amount),0);
   const expense = transactions.filter(t => t.type === 'expense').reduce((s,a)=>s+Number(a.amount),0);
   const balance = income - expense;
+import AppHeader from '../../components/AppHeader';
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,6 +37,7 @@ export default function Home({ navigation }) {
       </View>
       <TransactionList data={transactions} />
     </SafeAreaView>
+<AppHeader title="Smart Budget Tracker" />
   );
 }
 
